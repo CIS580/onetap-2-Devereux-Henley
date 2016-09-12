@@ -17,11 +17,14 @@ function Player(position) {
   this.height = 16;
   this.spritesheet  = new Image();
   this.spritesheet.src = encodeURI('assets/link/not link/notlink up.png');
+  this.state = "waiting";
 
   var self = this;
-  window.onmousclick = function(event) {
-    self.x = event.clientX;
-    self.state = "walking";
+  window.onmousedown = function(event) {
+    if(self.state == "waiting") {
+      self.x = event.clientX;
+      self.state = "walking";
+    }
   }
 }
 
@@ -29,9 +32,13 @@ function Player(position) {
  * @function updates the player object
  * {DOMHighResTimeStamp} time the elapsed time since the last frame
  */
-Player.prototype.update = function(time) {
+Player.prototype.update = function(elapsedTime) {
+  this.timer += elapsedTime;
   switch (this.state) {
     case "walking":
+      if(this.timer > 1000/16) {
+        this.frame = (this.frame + 1) % 4;
+      }
       this.y -= 1;
       break;
   }
