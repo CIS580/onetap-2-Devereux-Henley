@@ -11,8 +11,9 @@ var game = new Game(canvas, update, render);
 var player = new Player({x: 382, y: 460});
 var enemies = [];
 var firstEnemy = new Enemy({x: 0, y: 200}, 'assets/kultist/kultist down.png');
+
 enemies.push(firstEnemy);
-console.log(enemies);
+
 /**
  * @function masterLoop
  * Advances the game in sync with the refresh rate of the screen
@@ -35,8 +36,8 @@ masterLoop(performance.now());
  */
 function update(elapsedTime) {
   player.update(elapsedTime);
-  for (enemy in enemies) {
-    enemy.update(elapsedTime);
+  for (var idx in enemies) {
+    enemies[idx].update(elapsedTime);
   }
   // TODO: Update the game objects
 }
@@ -52,7 +53,7 @@ function render(elapsedTime, ctx) {
   ctx.fillStyle = "lightblue";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   player.render(elapsedTime, ctx);
-  for (enemy in enemies) {
-    enemy.render(elapsedTime, ctx);
+  for (var idx in enemies) {
+    enemies[idx].render(elapsedTime, ctx);
   }
 }
